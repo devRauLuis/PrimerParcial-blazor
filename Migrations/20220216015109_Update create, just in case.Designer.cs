@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Blazor.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(ProductsContext))]
     [Migration("20220216015109_Update create, just in case")]
     partial class Updatecreatejustincase
     {
