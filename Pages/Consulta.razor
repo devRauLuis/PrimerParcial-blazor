@@ -1,6 +1,6 @@
 @page "/consulta"
 @inject IToastService toastService
-@inject ILogger<Consulta> Logger
+@inject ILogger<Consulta> logger
 @inject NavigationManager navManager
 
 <div class="card shadow-lg">
@@ -11,50 +11,53 @@
         <div class="d-flex w-50 align-items-end">
             <div>
                 <label class="form-label" style="font-size:14px;">Filtro</label>
-                <select class="form-select" style="font-size:14px;" @onchange="args => { _filtro = args.Value as string; Logger.LogInformation(_filtro);}">
+                <select class="form-select" style="font-size:14px;"
+                    @onchange="args => { _filtro = args.Value as string; logger.LogInformation(_filtro);}">
                     <option value="desc">Descripción</option>
                     <option value="id">ID</option>
                 </select>
             </div>
-            <input type="@(_filtro == "id" ? "number" : "text")" @onchange="args => _busqueda = args.Value as string" class="form-control ms-4"/>
+            <input type='@(_filtro == "id" ? "number" : "text")' @onchange="args => _busqueda = args.Value as string"
+                class="form-control ms-4" />
             <button @onclick="Filtrar" class="btn btn-primary ms-2">Buscar</button>
         </div>
-        <table class="table table-light table-striped table-hover mt-4">
+        <table class="table table-light table-striped table-bordered table-hover mt-4">
             <thead>
-            <tr>
-                <th scope='col' class="">
-                    ID
-                </th>
-                <th scope='col' class="">
-                    Descripcion
-                </th>
-                <th scope='col' class="">
-                    Existencia
-                </th>
-                <th scope='col' class="">
-                    Costo
-                </th>
-                <th scope='col' class="">
-                    Valor Inventario
-                </th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th scope='col' class="">
+                        ID
+                    </th>
+                    <th scope='col' class="">
+                        Descripcion
+                    </th>
+                    @* <th scope='col' class="">
+                        Existencia
+                        </th>
+                        <th scope='col' class="">
+                        Costo
+                        </th>
+                        <th scope='col' class="">
+                        Valor Inventario
+                        </th> *@
+                    <th></th>
+                </tr>
             </thead>
 
             <tbody>
-            @foreach (var producto in this._productos)
-            {
-                <tr>
-                    <td>@producto.ProductoId</td>
-                    <td>@producto.Descripcion</td>
-                    <td>@producto.Existencia</td>
-                    <td>@producto.Costo</td>
-                    <td>@producto.ValorInventario</td>
-                    <td>
-                        <span class="oi oi-pencil text-primary me-2" aria-hidden='true' title='edit' @onclick='args => navManager.NavigateTo("/registro/" + producto.ProductoId)'/>
-                    </td>
-                </tr>
-            }
+                @foreach (var producto in this._productos)
+                {
+                    <tr>
+                        <td>@producto.ProductoId</td>
+                        <td>@producto.Descripcion</td>
+                        @* <td>@producto.Existencia</td>
+                            <td>@producto.Costo</td>
+                            <td>@producto.ValorInventario</td> *@
+                        <td>
+                            <span class="oi oi-pencil text-primary me-2" aria-hidden='true' title='edit'
+                            @onclick='args => navManager.NavigateTo("/registro/" + producto.ProductoId)' />
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -80,6 +83,8 @@
 
     private void Filtrar()
     {
+
+
         if (_busqueda is null)
         {
             _productos = ProductosBLL.GetList(p => true);
