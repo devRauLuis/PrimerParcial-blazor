@@ -12,7 +12,7 @@ namespace Blazor.BLL
 
         public static bool Existe(int id)
         {
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
                 try
                 {
@@ -44,7 +44,7 @@ namespace Blazor.BLL
         public static bool Insertar(Productos producto)
         {
 
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
                 try
                 {
@@ -61,7 +61,7 @@ namespace Blazor.BLL
 
         public static bool Modificar(Productos producto)
         {
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
                 try
                 {
@@ -77,7 +77,7 @@ namespace Blazor.BLL
 
         public static bool Eliminar(int id)
         {
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
 
                 var producto = Buscar(id);
@@ -100,7 +100,7 @@ namespace Blazor.BLL
 
         public static Productos? Buscar(int id)
         {
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
                 try
                 {
@@ -117,7 +117,7 @@ namespace Blazor.BLL
         public static List<Productos> GetList(Expression<Func<Productos, bool>> criterio)
         {
 
-            using (var context = new Context())
+            using (var context = new ProductsContext())
             {
                 try
                 {
