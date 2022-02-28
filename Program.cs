@@ -1,17 +1,13 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-// using Blazor.Data;
 using Blazored.Toast;
-using Blazored.Toast.Services;
-
+using Blazor.DAL;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazoredToast();
-// builder.Services.AddSingleton<WeatherForecastService>();
 
+builder.Services.AddDbContext<ProductsContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,3 +28,4 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
