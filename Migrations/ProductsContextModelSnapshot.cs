@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blazor.Migrations
 {
     [DbContext(typeof(ProductsContext))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    partial class ProductsContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -20,17 +20,10 @@ namespace Blazor.Migrations
             modelBuilder.Entity("Blazor.Entidades.ProductoDetalles", b =>
                 {
                     b.Property<int>("ProductoDetallesId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<float?>("Cantidad")
-                        .IsRequired()
-                        .HasColumnType("REAL");
-
-                    b.Property<float?>("Costo")
-                        .IsRequired()
-                        .HasColumnType("REAL");
-
-                    b.Property<float?>("Ganancia")
                         .IsRequired()
                         .HasColumnType("REAL");
 
@@ -43,11 +36,12 @@ namespace Blazor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<float?>("ValorInventario")
-                        .IsRequired()
-                        .HasColumnType("REAL");
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ProductoDetallesId");
+
+                    b.HasIndex("ProductoId");
 
                     b.ToTable("ProductoDetalles");
                 });
@@ -58,10 +52,25 @@ namespace Blazor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<float>("Costo")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Existencia")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Ganancia")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Precio")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("ValorInventario")
+                        .HasColumnType("REAL");
 
                     b.HasKey("ProductoId");
 
@@ -70,13 +79,11 @@ namespace Blazor.Migrations
 
             modelBuilder.Entity("Blazor.Entidades.ProductoDetalles", b =>
                 {
-                    b.HasOne("Blazor.Entidades.Productos", "Producto")
+                    b.HasOne("Blazor.Entidades.Productos", null)
                         .WithMany("ProductoDetalles")
-                        .HasForeignKey("ProductoDetallesId")
+                        .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Blazor.Entidades.Productos", b =>
